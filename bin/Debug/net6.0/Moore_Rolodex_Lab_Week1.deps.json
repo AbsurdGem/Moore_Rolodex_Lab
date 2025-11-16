@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Moore_Rolodex_Lab_Week1/1.0.0": {
+        "runtime": {
+          "Moore_Rolodex_Lab_Week1.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Moore_Rolodex_Lab_Week1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
