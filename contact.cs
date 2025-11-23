@@ -1,37 +1,32 @@
-/* 
-* Author: Morgan Moore
-* Date:11/16/2025
-* File: Contact.cs
-* Purpose: Base class for all contact types.
-* Demonstrates: Inheritance (base class), Composition (contains Address object)
-*/
-
-namespace Rolodex
+namespace MooreRolodexLab
 {
-    public class Contact
+    public class Contact : IContactDisplay
     {
-        // COMPOSITION: Contact *has an* Address
-        public Address Address { get; set; }
+        public int Id { get; set; }
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
+        public string PhoneNumber { get; set; } = "";
+        public string Email { get; set; } = "";
 
-        // Base class properties
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        public Contact() { }
 
-        public Contact(string first, string last, string phone, string email, Address address)
+        public Contact(int id, string first, string last, string phone, string email)
         {
+            Id = id;
             FirstName = first;
             LastName = last;
-            Phone = phone;
+            PhoneNumber = phone;
             Email = email;
-            Address = address; // Composition demonstrated here
         }
 
-        // Virtual method for polymorphism
-        public virtual string GetContactSummary()
+        public virtual string GetSummaryLine()
         {
-            return $"{FirstName} {LastName}\nPhone: {Phone}\nEmail: {Email}\nAddress: {Address}";
+            return $"{Id}: {FirstName} {LastName} ({PhoneNumber})";
+        }
+
+        public virtual string GetDetailText()
+        {
+            return $"ID: {Id}\nName: {FirstName} {LastName}\nPhone: {PhoneNumber}\nEmail: {Email}";
         }
     }
 }

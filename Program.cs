@@ -1,69 +1,69 @@
-﻿/* 
-* Author: Morgan Moore
-* Date:11/16/2025
-* File: Program.cs
-* Purpose: Week 1 Rolodex demo. Displays welcome message, demonstrates
-*          basic input/output, and shows inheritance + composition.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Rolodex
+namespace MooreRolodexLab
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.Title = "Rolodex Contact Manager - Week 1";
+            Console.WriteLine("====================================================");
+            Console.WriteLine("     Week 2 – Rolodex Application (Polymorphism)");
+            Console.WriteLine("     Developer: Morgan Moore");
+            Console.WriteLine("====================================================\n");
 
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("      Rolodex Contact Manager – Week 1 Demonstration");
-            Console.WriteLine("                    By: Morgan Moore");
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("This Week 1 demo shows:");
-            Console.WriteLine("- Inheritance (base + derived classes)");
-            Console.WriteLine("- Composition (Address inside Contact)");
-            Console.WriteLine("- Basic input/output");
-            Console.WriteLine();
+            ContactManager manager = new();
+            manager.SeedSampleData();
 
-            Console.WriteLine("Press ENTER to display sample contacts...");
-            Console.ReadLine();
+            bool running = true;
 
-            // Create sample contacts
-            List<Contact> contacts = new List<Contact>();
-
-            contacts.Add(new BusinessContact(
-                "John", "Carter", "555-1001", "jcarter@corp.com",
-                new Address("450 Corporate Dr", "Roanoke", "VA", "24019"),
-                "Carter Industries"
-            ));
-
-            contacts.Add(new FamilyContact(
-                "Morgan", "Moore", "540-555-9900", "mmoore@email.com",
-                new Address("2518 Green Dr", "Draper", "VA", "24324"),
-                "Cousin"
-            ));
-
-            contacts.Add(new FriendContact(
-                "Rebecca", "Cowen", "540-222-5555", "rebecca@mail.com",
-                new Address("105 Madison St", "Radford", "VA", "24141"),
-                "Met at college"
-            ));
-
-            // Display the objects
-            Console.WriteLine("\nDisplaying sample contacts:\n");
-
-            foreach (Contact c in contacts)
+            while (running)
             {
-                Console.WriteLine("-------------------------------------------------------");
-                Console.WriteLine(c.GetContactSummary()); // Polymorphic behavior
+                Console.WriteLine("\nMenu:");
+                Console.WriteLine("1 – Display all contacts");
+                Console.WriteLine("2 – Display contacts by last initial");
+                Console.WriteLine("0 – Exit");
+                Console.Write("Choice: ");
+
+                string? input = Console.ReadLine();
+                Console.WriteLine();
+
+                switch (input)
+                {
+                    case "1":
+                        ShowContacts(manager.GetAllContacts());
+                        break;
+
+                    case "2":
+                        Console.Write("Enter a letter: ");
+                        char letter = Console.ReadKey().KeyChar;
+                        Console.WriteLine("\n");
+                        ShowContacts(manager.GetContactsByLastInitial(letter));
+                        break;
+
+                    case "0":
+                        running = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
+                }
+            }
+        }
+
+        static void ShowContacts(List<IContactDisplay> contacts)
+        {
+            if (contacts.Count == 0)
+            {
+                Console.WriteLine("No contacts found.");
+                return;
             }
 
-            Console.WriteLine("-------------------------------------------------------");
-            Console.WriteLine("\nEnd of Week 1 Demonstration.");
-            Console.WriteLine("Press ENTER to exit...");
-            Console.ReadLine();
+            foreach (var contact in contacts)
+            {
+                Console.WriteLine(" - " + contact.GetSummaryLine());
+            }
         }
     }
 }

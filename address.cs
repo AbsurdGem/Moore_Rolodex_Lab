@@ -6,7 +6,7 @@
 * Demonstrates: Composition (Contact has an Address)
 */
 
-namespace Rolodex
+namespace MooreRolodexLab
 {
     public class Address
     {

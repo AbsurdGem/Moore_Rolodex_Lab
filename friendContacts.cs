@@ -1,27 +1,27 @@
-/* 
-* Author: Morgan Moore
-* Date:11/16/2025
-* File: FriendContact.cs
-* Purpose: Derived class for friend contacts.
-* Demonstrates: Inheritance
-*/
-
-namespace Rolodex
+namespace MooreRolodexLab
 {
     public class FriendContact : Contact
     {
-        public string HowWeMet { get; set; }
+        public string Nickname { get; set; } = "";
 
-        public FriendContact(string first, string last, string phone, string email,
-                             Address address, string howWeMet)
-            : base(first, last, phone, email, address)
+        public FriendContact() { }
+
+        public FriendContact(int id, string firstName, string lastName,
+            string phone, string email, string nickname)
+            : base(id, firstName, lastName, phone, email)
         {
-            HowWeMet = howWeMet;
+            Nickname = nickname;
         }
 
-        public override string GetContactSummary()
+        public override string GetSummaryLine()
         {
-            return $"[Friend Contact]\n{base.GetContactSummary()}\nHow We Met: {HowWeMet}";
+            return $"{Id}: {FirstName} \"{Nickname}\" {LastName}";
+        }
+
+        public override string GetDetailText()
+        {
+            return base.GetDetailText() +
+                   $"\nNickname: {Nickname}";
         }
     }
 }
