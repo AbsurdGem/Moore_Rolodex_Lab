@@ -1,69 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MooreRolodexLab;
 
-namespace MooreRolodexLab
+Console.WriteLine("============================================");
+Console.WriteLine("   Week 3 – Abstraction, Constructors, OOP");
+Console.WriteLine("   Rolodex Project – Morgan Moore");
+Console.WriteLine("============================================");
+Console.WriteLine("Welcome! This week demonstrates abstraction, constructors, and access specifiers.\n");
+
+var manager = new ContactManager();
+
+// Example test data
+manager.AddContact(new BusinessContact(
+    0, "Alex", "Green", "555-1111", "alex@company.com",
+    new Address("101 Main St", "Radford", "VA", "24141"),
+    "Tech Corp", "Manager"));
+
+foreach (var contact in manager.GetAllContacts())
 {
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("====================================================");
-            Console.WriteLine("     Week 2 – Rolodex Application (Polymorphism)");
-            Console.WriteLine("     Developer: Morgan Moore");
-            Console.WriteLine("====================================================\n");
-
-            ContactManager manager = new();
-            manager.SeedSampleData();
-
-            bool running = true;
-
-            while (running)
-            {
-                Console.WriteLine("\nMenu:");
-                Console.WriteLine("1 – Display all contacts");
-                Console.WriteLine("2 – Display contacts by last initial");
-                Console.WriteLine("0 – Exit");
-                Console.Write("Choice: ");
-
-                string? input = Console.ReadLine();
-                Console.WriteLine();
-
-                switch (input)
-                {
-                    case "1":
-                        ShowContacts(manager.GetAllContacts());
-                        break;
-
-                    case "2":
-                        Console.Write("Enter a letter: ");
-                        char letter = Console.ReadKey().KeyChar;
-                        Console.WriteLine("\n");
-                        ShowContacts(manager.GetContactsByLastInitial(letter));
-                        break;
-
-                    case "0":
-                        running = false;
-                        break;
-
-                    default:
-                        Console.WriteLine("Invalid option.");
-                        break;
-                }
-            }
-        }
-
-        static void ShowContacts(List<IContactDisplay> contacts)
-        {
-            if (contacts.Count == 0)
-            {
-                Console.WriteLine("No contacts found.");
-                return;
-            }
-
-            foreach (var contact in contacts)
-            {
-                Console.WriteLine(" - " + contact.GetSummaryLine());
-            }
-        }
-    }
+    Console.WriteLine(contact.GetSummaryLine());
 }

@@ -1,32 +1,51 @@
+/* 
+ * Author: Morgan Moore
+ * Date: 11/30/2025
+ * File: Contact.cs
+ * Purpose: Abstract base class for all contact types. 
+ * Demonstrates abstraction, constructors, access specifiers, and interface usage.
+ */
+
 namespace MooreRolodexLab
 {
-    public class Contact : IContactDisplay
+    public abstract class Contact : IContactDisplay
     {
-        public int Id { get; set; }
+        // Access specifiers updated: ID cannot be publicly changed.
+        public int Id { get; protected set; }
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string PhoneNumber { get; set; } = "";
         public string Email { get; set; } = "";
 
-        public Contact() { }
+        // Composition: Contact HAS an Address.
+        public Address Address { get; set; }
 
-        public Contact(int id, string first, string last, string phone, string email)
+        // Empty constructor
+        protected Contact() { }
+
+        // Main constructor used by all derived classes
+        protected Contact(int id, string first, string last, string phone, string email, Address address)
         {
             Id = id;
             FirstName = first;
             LastName = last;
             PhoneNumber = phone;
             Email = email;
+            Address = address;
         }
 
-        public virtual string GetSummaryLine()
-        {
-            return $"{Id}: {FirstName} {LastName} ({PhoneNumber})";
-        }
+        // REQUIRED by interface – marked abstract for polymorphism
+        public abstract string GetSummaryLine();
 
+        // Virtual method used by derived classes to extend details
         public virtual string GetDetailText()
         {
-            return $"ID: {Id}\nName: {FirstName} {LastName}\nPhone: {PhoneNumber}\nEmail: {Email}";
+            return
+                $"ID: {Id}\n" +
+                $"Name: {FirstName} {LastName}\n" +
+                $"Phone: {PhoneNumber}\n" +
+                $"Email: {Email}\n" +
+                $"Address: {Address}";
         }
     }
 }

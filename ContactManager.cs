@@ -1,46 +1,30 @@
-using System.Collections.Generic;
-using System.Linq;
+/* 
+ * Author: Morgan Moore
+ * Date: 11/30/2025
+ * File: ContactManager.cs
+ * Purpose: Handles composition of Contact objects, demonstrates object creation.
+ */
 
 namespace MooreRolodexLab
 {
     public class ContactManager
     {
-        private readonly List<IContactDisplay> _contacts = new();
-        private int _nextId = 1;
+        private List<Contact> _contacts = new List<Contact>();
+        private int _nextId = 1;  // ensures unique IDs
 
-        public void SeedSampleData()
+        public void AddContact(Contact c)
         {
-            AddContact(new BusinessContact(0, "Alex", "Green", "555-1111", "alex@company.com", "Tech Corp", "Manager"));
-            AddContact(new FamilyContact(0, "Stephen", "Underwood", "555-4444", "steve@email.com", "Boyfriend"));
-            AddContact(new FamilyContact(0, "Rebecca", "Moore", "555-2222", "becca@example.com", "Sister"));
-            AddContact(new FriendContact(0, "Jordan", "Lee", "555-3333", "jlee@mail.com", "Jordy"));
+            c.GetType().GetProperty("Id")?.SetValue(c, _nextId++);
+            _contacts.Add(c);
         }
 
-        public void AddContact(Contact contact)
-        {
-            contact.Id = _nextId++;
-            _contacts.Add(contact);
-        }
+        public List<Contact> GetAllContacts() => _contacts;
 
-        public List<IContactDisplay> GetAllContacts()
+        public List<Contact> GetByLastInitial(char letter)
         {
-            return _contacts.ToList();
-        }
-
-        public List<IContactDisplay> GetContactsByLastInitial(char initial)
-        {
-            initial = char.ToUpper(initial);
-
-            return _contacts.Where(c =>
-            {
-                if (c is Contact cc &&
-                    cc.LastName.Length > 0 &&
-                    char.ToUpper(cc.LastName[0]) == initial)
-                {
-                    return true;
-                }
-                return false;
-            }).ToList();
+            return _contacts
+                .Where(c => c.LastName.StartsWith(letter.ToString(), StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
     }
 }

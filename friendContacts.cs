@@ -1,14 +1,21 @@
+/* 
+ * Author: Morgan Moore
+ * Date: 11/30/2025
+ * File: FriendContact.cs
+ * Purpose: Represents a friend contact.
+ */
+
 namespace MooreRolodexLab
 {
     public class FriendContact : Contact
     {
-        public string Nickname { get; set; } = "";
+        public string Nickname { get; private set; } = "";
 
         public FriendContact() { }
 
         public FriendContact(int id, string firstName, string lastName,
-            string phone, string email, string nickname)
-            : base(id, firstName, lastName, phone, email)
+            string phone, string email, string nickname, Address address)
+            : base(id, firstName, lastName, phone, email, address)
         {
             Nickname = nickname;
         }
@@ -20,8 +27,12 @@ namespace MooreRolodexLab
 
         public override string GetDetailText()
         {
-            return base.GetDetailText() +
-                   $"\nNickname: {Nickname}";
+            return $"Friend Contact\n-----------------" +
+                   $"\nName: {FirstName} {LastName}" +
+                   $"\nNickname: {Nickname}" +
+                   $"\nPhone: {PhoneNumber}" +
+                   $"\nEmail: {Email}" +
+                   $"\nAddress: {Address}";
         }
     }
 }
