@@ -1,30 +1,21 @@
-/* 
- * Author: Morgan Moore
- * Date: 11/30/2025
- * File: ContactManager.cs
- * Purpose: Handles composition of Contact objects, demonstrates object creation.
- */
+using System.Collections.Generic;
 
 namespace MooreRolodexLab
 {
     public class ContactManager
     {
-        private List<Contact> _contacts = new List<Contact>();
-        private int _nextId = 1;  // ensures unique IDs
+        private readonly List<Contact> _contacts = new();
+        private int _nextId = 1;
 
-        public void AddContact(Contact c)
+        public void AddContact(Contact contact)
         {
-            c.GetType().GetProperty("Id")?.SetValue(c, _nextId++);
-            _contacts.Add(c);
+            contact.GetType()
+                   .GetProperty("Id")!
+                   .SetValue(contact, _nextId++);   // ✅ Safe auto-ID assignment
+
+            _contacts.Add(contact);
         }
 
         public List<Contact> GetAllContacts() => _contacts;
-
-        public List<Contact> GetByLastInitial(char letter)
-        {
-            return _contacts
-                .Where(c => c.LastName.StartsWith(letter.ToString(), StringComparison.OrdinalIgnoreCase))
-                .ToList();
-        }
     }
 }
