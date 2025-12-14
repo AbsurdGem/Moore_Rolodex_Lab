@@ -22,7 +22,7 @@ This is a C# console-based Rolodex application that allows users to manage conta
 3. Run the application using `dotnet run`
 
 ## Demo Video
-
+--A video demo was not included with this submission--
 
 ---
 
